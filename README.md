@@ -15,3 +15,8 @@ Run the App in your command line
 ```
 uvicorn main:app --reload
 ```
+or 
+
+```
+python main.py
+```
