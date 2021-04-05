@@ -39,7 +39,7 @@ We have prepared a simple Random Forest Model for purposes of serving it via Fas
 
 
 Here are the steps:
- - Download Data from Kaggle (California Housing)
+ - Download Data from Kaggle (California Housing) - see [Download Data from Kaggle](Download_Data_from_Kaggle.md)
  - Explored the data
  - Removed some missing values (<1% of the data>)
  - Removed Categorical Variables
