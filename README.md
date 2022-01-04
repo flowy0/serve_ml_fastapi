@@ -54,3 +54,12 @@ The scripts below are run in succession:
 Notebook:
  - notebooks/explore_data.ipynb
 
+References: 
+- https://towardsdatascience.com/how-to-build-and-deploy-a-machine-learning-model-with-fastapi-64c505213857
+
+
+### TO-DO:
+
+- Add Dockerfile for re-produciblity
+- Add Streamlit Interface for nicer UI
+

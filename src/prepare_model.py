@@ -6,7 +6,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_absolute_error
-
+from sklearn.metrics import accuracy_score
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(level='INFO')
@@ -25,7 +25,7 @@ logger.info(X.info())
 
 logger.info(X.describe())
 
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.30, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
 
 # def get_DT_mae(max_leaf_nodes, X_train, X_test, y_train, y_test):
@@ -105,6 +105,16 @@ utils.create_dir(file_path=RF_MODEL_OUTPUT)
 with open(RF_MODEL_OUTPUT, 'wb') as file:
     pickle.dump(rf_model, file)
 logger.info(f"Model saved to {RF_MODEL_OUTPUT}")
+
+
+
+# test model performance
+y_pred_test = rf_model.predict(X_test)
+
+
+
+
+print(f'Model test with criterion MAE: {mean_absolute_error(y_test, y_pred_test):0.2f}')
 
 
 # if __name__ == "__main__":

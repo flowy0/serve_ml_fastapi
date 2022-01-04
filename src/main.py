@@ -2,37 +2,31 @@ from fastapi import FastAPI
 from typing import Optional, List
 from pydantic import BaseModel
 import uvicorn
+import pickle
+import pandas as pd
+from pydantic import BaseModel
+
+class data_input(BaseModel):
+    longitude: float
+    latitude: float
+    housing_median_age: float
+    total_rooms: int
+    total_bedrooms: int
+    population: int
+    households: int
+    median_income: int
+
 
 app = FastAPI()
 
 
-class Item(BaseModel):
-    name: str
-    price: float
-    is_offer: Optional[bool] = None
-
-
-class Food(BaseModel):
-    name: str
-    ingredients: List[str] = []
-
-
-@app.post("/food_summary")
-async def prepare_food(food: Food):
-    return {"message": f"Preparing {food.name}"}
-
-
-@app.post("/food_delivery")
-async def get_food_delivery(food: Food, delivery: bool = False):
-    return {"message": f"Preparing {food.name}", "delivery": f"{delivery}"}
-
-
-@app.post("/food_ingredients")
-async def get_food_ingredients(food: Food):
-    all_ingredients = []
-    for i in food.ingredients:
-        all_ingredients.append(i.lower())
-    return {"message": f"Preparing {food.name}", "ingredients": f"{all_ingredients}"}
+# load model 
+model_file_name='models/rfmodel.pkl'
+with open(model_file_name, 'rb') as file:
+    model=pickle.load(file)
+    
+def get_pred():
+    pass
 
 
 @app.get("/")
@@ -45,15 +39,37 @@ async def info():
     return {"Info": "This is a test project to see how to create API Endpoints"}
 
 
-@app.get("/predict")
-async def predict():
-    return {"prediction": "Test"}
+@app.post("/predict")
+async def single_predict(input: data_input):
+    
+    # sample input:
+#     longitude,latitude,housing_median_age,total_rooms,total_bedrooms,population,households,median_income
+# -122.23,37.88,41.0,880.0,129.0,322.0,126.0,8.3252
+        
+    # print(input_dict)
+    # print(type(input_dict))
+    
+    print(f"{type(input)=}, {input=}")
+    
+    # print(f"{type(input_dict)=}, {input_dict=}")
+    
+    input_df = pd.DataFrame.from_dict([dict(input)])
+    print(f"{type(input_df)=}, {input_df=}")
+    print(input_df.info())
+    
+    results=model.predict(input_df)
+    print(f"{type(results)=}, {results}")
+
+    results_conv=results[0].astype(float)
+    print(f"{type(results_conv)=}, {results_conv}")
+    
+    return {"prediction": results_conv}
 
 
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: Optional[str] = None):
-    return {"item_id": item_id, "q": q}
+# @app.get("/items/{item_id}")
+# def read_item(item_id: int, q: Optional[str] = None):
+#     return {"item_id": item_id, "q": q}
 
 
 if __name__ == "__main__":
-    uvicorn.run("main.app", host="127.0.0.1", port=8000)
+    uvicorn.run("src.main.app", host="127.0.0.1", port=8000)
