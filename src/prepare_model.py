@@ -7,6 +7,7 @@ from sklearn.tree import DecisionTreeRegressor
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_absolute_error
 from sklearn.metrics import accuracy_score
+import joblib
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(level='INFO')
@@ -106,6 +107,9 @@ with open(RF_MODEL_OUTPUT, 'wb') as file:
     pickle.dump(rf_model, file)
 logger.info(f"Model saved to {RF_MODEL_OUTPUT}")
 
+# compress model
+joblib.dump(rf_model,  'models/rf_model_compress.pkl',compress=3)
+logger.info(f"Compresssed Model saved to rf_model_compress.pkl")
 
 
 # test model performance

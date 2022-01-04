@@ -5,6 +5,7 @@ import uvicorn
 import pickle
 import pandas as pd
 from pydantic import BaseModel
+import joblib 
 
 class data_input(BaseModel):
     longitude: float
@@ -21,9 +22,9 @@ app = FastAPI()
 
 
 # load model 
-model_file_name='models/rfmodel.pkl'
-with open(model_file_name, 'rb') as file:
-    model=pickle.load(file)
+model_file_name='models/rf_model_compress.pkl'
+model = joblib.load(model_file_name)
+
     
 def get_pred():
     pass
