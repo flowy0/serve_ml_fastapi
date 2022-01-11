@@ -1,6 +1,9 @@
 # Repo to try serving ML models using Fast API
 
-
+This project aims to do the following
+1. Create a simple ML model to try out model serving via FastAPI
+2. Test out FastAPI 
+3. Deploy the model to Heroku
 
 
 #### Setup Virtual Environment
@@ -10,7 +13,7 @@ conda activate fastapi
 pip install -r requirements.txt
 ```
 
-#### Run FastAPI
+#### Run FastAPI (Locally)
 Run the App in your command line
 ```
 uvicorn main:app --reload
