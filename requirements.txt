@@ -1,7 +1,6 @@
-fastapi
-uvicorn
-pydantic
-kaggle
-pandas
-scikit-learn
-matplotlib
+fastapi==0.71.0
+joblib==1.1.0
+pandas==1.3.5
+pydantic==1.8.2
+scikit_learn==1.0.2
+uvicorn==0.16.0
