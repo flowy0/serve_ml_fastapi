@@ -54,12 +54,55 @@ The scripts below are run in succession:
 Notebook:
  - notebooks/explore_data.ipynb
 
+
+
+### Deployment to Heroku:
+
+Connect your repo to Heroku 
+
+
+In this case, my app is called `house-prices-app1`
+
+```
+heroku git:remote -a house-prices-app1
+```
+
+Add the Procfile required
+
+```
+web: uvicorn src.main:app --host=0.0.0.0 --port=${PORT:-5000}
+```
+
+Add runtime.txt with the content
+
+```
+python-3.8.12
+```
+
+Add and Commit these 2 files to trigger a deployment to Heroku
+```
+git add Procfile runtime.txt
+git push heroku main  
+```
+
+
+Open the app in the browser
+```
+heroku open
+```
+
+The app is now accessible at https://house-prices-app1.herokuapp.com/docs
+
+
 References: 
 - https://towardsdatascience.com/how-to-build-and-deploy-a-machine-learning-model-with-fastapi-64c505213857
-
+- https://towardsdatascience.com/how-to-deploy-your-fastapi-app-on-heroku-for-free-8d4271a4ab9
 
 ### TO-DO:
 
 - Add Dockerfile for re-produciblity
 - Add Streamlit Interface for nicer UI
+
+
+
 
